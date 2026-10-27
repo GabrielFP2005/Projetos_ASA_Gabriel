@@ -1,0 +1,12 @@
+$TTL 86400
+@ IN SOA dns.gabrielpalmeira.devops. root.gabrielpalmeira.devops. (
+	2025082501 ;Serial
+	3600 ;Refresh
+	1800 ;Retry
+	604800 ;Expire
+	86400 ;Minimum TTL
+)
+	IN NS	  dns.gabrielpalmeira.devops.
+	IN MX 10  dns.gabrielpalmeira.devops.
+www 	IN A 	  192.168.56.16
+dns 	IN A 	  192.168.56.116
