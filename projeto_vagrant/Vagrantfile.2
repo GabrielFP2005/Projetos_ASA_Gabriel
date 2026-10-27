@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+ if Vagrant.has_plugin?("vagrant-vbguest")
+  config.vbguest.auto_update = false
+ end
+ (1..2).each do |i|
+  config.vm.define "vm#{i}-gabriel" do |vm_proj|
+   vm_proj.vm.box = "debian/bookworm64"
+   vm_proj.vm.hostname = "vm#{i}-gabriel"
+   vm_proj.vm.network "public_network", bridge: "enp1s0"
+   vm_proj.vm.network "private_network", ip: "192.168.56.2#{i+16}"
+   # Configurações específicas do VirtualBox
+   vm_proj.vm.provider "virtualbox" do |vb|
+    vb.name = vm_proj.vm.hostname
+    vb.memory = "1024"
+    vb.gui = false
+   end
+   if i == 1
+    # Provisione a máquina virtual com Apache
+    vm_proj.vm.provision "shell", inline: <<-FIM
+     apt-get update
+     apt-get install -y apache2
+    FIM
+    # Crie 3 novas unidades de disco de 1GB na máquina
+    (0..2).each do |x|
+     vm_proj.vm.disk :disk, size: "1GB", name: "disk-#{x}"
+    end
+   end
+  end
+ end
+end
