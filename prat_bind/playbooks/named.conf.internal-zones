@@ -1,0 +1,10 @@
+zone "gabrielpalmeira.devops" IN {
+	type master;
+	file "/etc/bind/gabrielpalmeira.devops.db";
+	allow-update { none; };
+};
+zone "56.168.192.in-addr.arpa" IN {
+	type master;
+	file "/etc/bind/56.168.192.db";
+	allow-update { none; };
+};
